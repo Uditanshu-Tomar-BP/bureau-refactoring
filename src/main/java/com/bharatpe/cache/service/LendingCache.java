@@ -1,6 +1,6 @@
 package com.bharatpe.cache.service;
 
-import com.bharatpe.cache.DTO.RequestDto;
+import com.bharatpe.cache.DTO.AddCacheDto;
 import com.bharatpe.cache.controller.cacheController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +22,14 @@ public class LendingCache {
 
 
 
-    public Object add(RequestDto requestDto){
-        if(requestDto.validate()){
-            String key = requestDto.getKey();
+    public Object add(AddCacheDto addCacheDto){
+        if(addCacheDto.validate()){
+            String key = addCacheDto.getKey();
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-            final boolean hasKey = redisTemplate.hasKey(requestDto.getKey());
+            final boolean hasKey = redisTemplate.hasKey(addCacheDto.getKey());
 
-            operations.set(key, requestDto.getValue(), 24, TimeUnit.HOURS);
-            logger.info(": cache insert key:{} >> value : {} ", key, requestDto.getValue());
+            operations.set(key, addCacheDto.getValue(), 24, TimeUnit.HOURS);
+            logger.info(": cache insert key:{} >> value : {} ", key, addCacheDto.getValue());
 
             return true;
         }
@@ -48,6 +48,6 @@ public class LendingCache {
             }
         }
 
-        return false;
+        return null;
     }
 }

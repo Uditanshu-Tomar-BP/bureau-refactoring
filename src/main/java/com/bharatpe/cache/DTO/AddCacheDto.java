@@ -2,7 +2,7 @@ package com.bharatpe.cache.DTO;
 
 import java.util.Objects;
 
-public class RequestDto {
+public class AddCacheDto {
     private String key;
 
     private Object value;

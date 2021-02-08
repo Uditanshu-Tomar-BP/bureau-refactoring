@@ -2,7 +2,7 @@ package com.bharatpe.cache.DTO;
 
 import java.util.Objects;
 
-public class ResponseDTO {
+public class GetCacheDTO {
 
     private Boolean success;
     private Object response;
