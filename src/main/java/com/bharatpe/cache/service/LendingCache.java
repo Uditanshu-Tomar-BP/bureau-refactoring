@@ -28,7 +28,7 @@ public class LendingCache {
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
             final boolean hasKey = redisTemplate.hasKey(addCacheDto.getKey());
 
-            operations.set(key, addCacheDto.getValue(), 24, TimeUnit.HOURS);
+            operations.set(key, addCacheDto.getValue(), addCacheDto.getTtl(), TimeUnit.HOURS);
             logger.info(": cache insert key:{} >> value : {} ", key, addCacheDto.getValue());
 
             return true;
