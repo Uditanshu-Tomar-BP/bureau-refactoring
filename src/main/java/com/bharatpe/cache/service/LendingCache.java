@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -49,5 +50,23 @@ public class LendingCache {
         }
 
         return null;
+    }
+
+    public boolean acquireLock(String key) {
+        if (Objects.nonNull(key)) {
+            final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+            Boolean lockTaken = operations.setIfAbsent(key, "LOCK_TAKEN", Duration.ofSeconds(10));
+            if (lockTaken != null && lockTaken) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void releaseLock(String key) {
+        if (Objects.nonNull(key)) {
+            final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+            redisTemplate.delete(key);
+        }
     }
 }
