@@ -52,6 +52,16 @@ public class LendingCache {
         return null;
     }
 
+    public Object delete(String key){
+        if(Objects.nonNull(key)){
+            Boolean deleted = redisTemplate.delete(key);
+            if (deleted != null && deleted) {
+                logger.info("Key Deleted:{}", key);
+            }
+        }
+        return null;
+    }
+
     public boolean acquireLock(String key) {
         if (Objects.nonNull(key)) {
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
