@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -60,6 +61,12 @@ public class LendingCache {
             }
         }
         return null;
+    }
+
+    public Boolean contains(String key, Object value) {
+        Assert.notNull(key, "key is required");
+        Assert.notNull(value, "value is required");
+        return redisTemplate.opsForSet().isMember(key, value);
     }
 
     public boolean acquireLock(String key) {
