@@ -1,0 +1,9 @@
+FROM 546726916200.dkr.ecr.ap-south-1.amazonaws.com/bharatpe/custome-java-8:1.0 AS java-build
+LABEL name="abhinay"
+
+WORKDIR /app 
+COPY pom.xml .
+RUN mvn clean dependency:go-offline
+COPY . .
+RUN mvn clean install deploy
+ENTRYPOINT ["tail", "-f", "/dev/null"]
