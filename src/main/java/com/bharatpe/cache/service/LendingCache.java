@@ -70,9 +70,13 @@ public class LendingCache {
     }
 
     public boolean acquireLock(String key) {
+        return acquireLock(key, 10);
+    }
+
+    public boolean acquireLock(String key, Integer ttl) {
         if (Objects.nonNull(key)) {
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-            Boolean lockTaken = operations.setIfAbsent(key, "LOCK_TAKEN", Duration.ofSeconds(10));
+            Boolean lockTaken = operations.setIfAbsent(key, "LOCK_TAKEN", Duration.ofSeconds(ttl));
             if (lockTaken != null && lockTaken) {
                 return true;
             }
