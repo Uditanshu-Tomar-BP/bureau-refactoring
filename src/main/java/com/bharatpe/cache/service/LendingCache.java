@@ -92,12 +92,19 @@ public class LendingCache {
         }
     }
 
-    public Boolean addValue(String key, Object value) {
+    public Boolean addValue(String key, Object value, String operation) {
         Assert.notNull(key, "key is required");
         Assert.notNull(value, "value is required");
-        Long add = redisTemplate.opsForSet().add(key, value);
-        logger.info(": cache insert individual in set key:{} >> value : {} ", key, value);
-        return Objects.nonNull(add) && add > 0L;
+        if(operation.equals("ADD")) {
+            Long add = redisTemplate.opsForSet().add(key, value);
+            logger.info(": cache insert individual in set key:{} >> value : {} ", key, value);
+            return Objects.nonNull(add) && add > 0L;
+        }
+        if (operation.equals("DELETE")) {
+            Long delete = redisTemplate.opsForSet().remove(key, value);
+            logger.info(": cache delete individual from set key:{} >> value : {} ", key, value);
+            return Objects.nonNull(delete) && delete > 0L;
+        }
+        return null;
     }
-
 }
