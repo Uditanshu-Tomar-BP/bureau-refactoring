@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -90,4 +91,13 @@ public class LendingCache {
             redisTemplate.delete(key);
         }
     }
+
+    public Boolean addValue(String key, Object value) {
+        Assert.notNull(key, "key is required");
+        Assert.notNull(value, "value is required");
+        Long add = redisTemplate.opsForSet().add(key, value);
+        logger.info(": cache insert individual in set key:{} >> value : {} ", key, value);
+        return Objects.nonNull(add) && add > 0L;
+    }
+
 }
