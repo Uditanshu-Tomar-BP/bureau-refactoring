@@ -39,6 +39,17 @@ public class LendingCache {
         return false;
     }
 
+    public Object add(AddCacheDto addCacheDto, TimeUnit timeUnit){
+        if(addCacheDto.validate()){
+            String key = addCacheDto.getKey();
+            final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, addCacheDto.getValue(), addCacheDto.getTtl(), timeUnit);
+            logger.info(": cache insert key:{} >> value : {} ", key, addCacheDto.getValue());
+            return true;
+        }
+        return false;
+    }
+
     public Object get(String key){
 
         if(Objects.nonNull(key)){
