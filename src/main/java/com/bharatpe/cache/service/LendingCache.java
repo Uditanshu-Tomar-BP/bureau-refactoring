@@ -52,21 +52,24 @@ public class LendingCache {
 
     public Object get(String key){
 
-        if(Objects.nonNull(key)){
-            final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-            final boolean hasKey = Boolean.TRUE.equals(redisTemplate.hasKey(key));
+        try {
+            if(Objects.nonNull(key)){
+                final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+                final boolean hasKey = Boolean.TRUE.equals(redisTemplate.hasKey(key));
 
-            if (hasKey) {
-                logger.info(": fetched from cache key:{}  ", key);
+                if (hasKey) {
+                    logger.info(": fetched from cache key:{}  ", key);
 
-                Object value = operations.get(key);
+                    Object value = operations.get(key);
 
-                logger.info("fetched from key:{}   value : {} ", key, value);
+                    logger.info("fetched from key:{} value : {} ", key, value.toString());
 
-                return value;
+                    return value;
+                }
             }
+        } catch (Exception e) {
+            logger.info("Error occurred while fetching the value for key : {}", key, e);
         }
-
         return null;
     }
 
