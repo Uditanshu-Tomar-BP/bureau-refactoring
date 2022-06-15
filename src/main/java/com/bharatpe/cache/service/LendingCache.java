@@ -29,7 +29,7 @@ public class LendingCache {
         if(addCacheDto.validate()){
             String key = addCacheDto.getKey();
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-            final boolean hasKey = redisTemplate.hasKey(addCacheDto.getKey());
+            final boolean hasKey = Boolean.TRUE.equals(redisTemplate.hasKey(addCacheDto.getKey()));
 
             operations.set(key, addCacheDto.getValue(), addCacheDto.getTtl(), TimeUnit.HOURS);
             logger.info(": cache insert key:{} >> value : {} ", key, addCacheDto.getValue());
@@ -54,7 +54,7 @@ public class LendingCache {
 
         if(Objects.nonNull(key)){
             final ValueOperations<String, Object> operations = redisTemplate.opsForValue();
-            final boolean hasKey = redisTemplate.hasKey(key);
+            final boolean hasKey = Boolean.TRUE.equals(redisTemplate.hasKey(key));
 
             if (hasKey) {
                 logger.info(": fetched from cache key:{}  ", key);
