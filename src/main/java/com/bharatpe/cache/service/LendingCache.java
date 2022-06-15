@@ -58,7 +58,12 @@ public class LendingCache {
 
             if (hasKey) {
                 logger.info(": fetched from cache key:{}  ", key);
-                return operations.get(key);
+
+                Object value = operations.get(key);
+
+                logger.info("fetched from key:{}   value : {} ", key, value);
+
+                return value;
             }
         }
 
