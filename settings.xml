@@ -6,7 +6,7 @@
     <mirror>
       <id>central</id>
       <name>central</name>
-      <url>https://nexus.bharatpe.in/repository/maven-group/</url>
+      <url>http://nexus.internal-bp.com/repository/maven-group/</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
   </mirrors>
