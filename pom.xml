@@ -37,12 +37,12 @@
 			<snapshotRepository>
 				<id>nexus-snapshots</id>
 				<name>maven Snapshot Repository</name>
-				<url>https://nexus.bharatpe.in/repository/maven-snapshots/</url>
+				<url>http://nexus.internal-bp.com/repository/maven-snapshots/</url>
 			</snapshotRepository>
 			<repository>
 				<id>nexus-releases</id>
 				<name>maven Snapshot Repository</name>
-				<url>https://nexus.bharatpe.in/repository/maven-releases/</url>
+				<url>http://nexus.internal-bp.com/repository/maven-releases/</url>
 				</repository>
 		</distributionManagement>
 	<build>
@@ -64,7 +64,7 @@
 			<repository>
 				<id>maven-group</id>
 				<name>maven-group</name>
-				<url>https://nexus.bharatpe.in/repository/maven-group/</url>
+				<url>http://nexus.internal-bp.com/repository/maven-group/</url>
 				<snapshots>
 									<enabled>true</enabled>
 							</snapshots>
@@ -72,12 +72,12 @@
 			<repository>
 				<id>com.bharatpe-snapshot</id>
 				<name>snapshot</name>
-				<url>https://nexus.bharatpe.in/repository/maven-snapshots/</url>
+				<url>http://nexus.internal-bp.com/repository/maven-snapshots/</url>
 			</repository>
 			<repository>
 				<id>com.bharatpe-release</id>
 				<name>release</name>
-				<url>https://nexus.bharatpe.in/repository/maven-releases/</url>
+				<url>http://nexus.internal-bp.com/repository/maven-releases/</url>
 			</repository>
 		</repositories>
 </project>

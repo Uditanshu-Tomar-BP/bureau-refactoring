@@ -4,7 +4,7 @@ LABEL name="ravi ranjan"
 WORKDIR /app
 COPY pom.xml .
 COPY settings.xml .
-RUN mvn clean dependency:go-offline
+RUN mvn -s settings.xml clean dependency:go-offline
 COPY . .
 RUN mvn clean -s settings.xml deploy
 ENTRYPOINT ["tail", "-f", "/dev/null"]
