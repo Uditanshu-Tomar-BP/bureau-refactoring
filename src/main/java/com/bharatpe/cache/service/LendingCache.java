@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
+import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -102,6 +104,23 @@ public class LendingCache {
             }
         }
         return false;
+    }
+
+    public Boolean isKeyExist(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    public void updateHash(String key, Map<String, String> mapObj, Date expiry) {
+        redisTemplate.opsForHash().putAll(key, mapObj);
+        redisTemplate.expireAt(key, expiry);
+    }
+
+    public Map<Object, Object> getHashEntries(String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    public Boolean removeHashKey(String key) {
+        return redisTemplate.delete(key);
     }
 
     public void releaseLock(String key) {
