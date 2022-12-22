@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -145,5 +146,26 @@ public class LendingCache {
         Long delete = redisTemplate.opsForSet().remove(key, value);
         logger.info(": cache delete individual from set key:{} >> value : {} ", key, value);
         return Objects.nonNull(delete) && delete > 0L;
+    }
+    public Object popValueFromSet(String key) {
+        Assert.notNull(key, "key is required");
+        Object value = this.redisTemplate.opsForSet().pop(key);
+        logger.info(": cache pop individual from set key:{} >> value : {} ", key, value);
+        return value;
+    }
+
+    public List<Object> popValuesFromSet(String key, Long count) {
+        Assert.notNull(key, "key is required");
+        Assert.notNull(count, "count is required");
+        List<Object> values = this.redisTemplate.opsForSet().pop(key, count);
+        logger.info(": cache pop values from set key:{}", key);
+        return values;
+    }
+
+    public Long sizeOfSet(String key) {
+        Assert.notNull(key, "key is required");
+        Long size = redisTemplate.opsForSet().size(key);
+        logger.info(": cache set size: {} of key:{}", size, key);
+        return size;
     }
 }
