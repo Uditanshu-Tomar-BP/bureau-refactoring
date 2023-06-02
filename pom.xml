@@ -2,29 +2,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.2</version>
+		<version>2.7.12</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bharatpe.cache</groupId>
-	<artifactId>cache</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>cache</name>
-	<description>Lending cache service</description>
+
+	<groupId>com.bharatpe.lending</groupId>
+	<artifactId>bureau-refactoring</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bureau-refactoring</name>
+	<description>Refactored BureauService</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>
@@ -32,52 +30,46 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bharatpe.common</groupId>
+			<artifactId>bharatpe-common</artifactId>
+			<version>3.0-lending-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bharatpe.cache</groupId>
+			<artifactId>cache</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+
 	</dependencies>
-	<distributionManagement>
-			<snapshotRepository>
-				<id>nexus-snapshots</id>
-				<name>maven Snapshot Repository</name>
-				<url>http://nexus.internal-bp.com/repository/maven-snapshots/</url>
-			</snapshotRepository>
-			<repository>
-				<id>nexus-releases</id>
-				<name>maven Snapshot Repository</name>
-				<url>http://nexus.internal-bp.com/repository/maven-releases/</url>
-				</repository>
-		</distributionManagement>
+
 	<build>
-		<extensions>
-			<extension>
-				<groupId>com.github.platform-team</groupId>
-				<artifactId>aws-maven</artifactId>
-				<version>6.0.0</version>
-			</extension>
-		</extensions>
 		<plugins>
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-			<repository>
-				<id>maven-group</id>
-				<name>maven-group</name>
-				<url>http://nexus.internal-bp.com/repository/maven-group/</url>
-				<snapshots>
-									<enabled>true</enabled>
-							</snapshots>
-			</repository>
-			<repository>
-				<id>com.bharatpe-snapshot</id>
-				<name>snapshot</name>
-				<url>http://nexus.internal-bp.com/repository/maven-snapshots/</url>
-			</repository>
-			<repository>
-				<id>com.bharatpe-release</id>
-				<name>release</name>
-				<url>http://nexus.internal-bp.com/repository/maven-releases/</url>
-			</repository>
-		</repositories>
+
 </project>
