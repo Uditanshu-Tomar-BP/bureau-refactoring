@@ -6,6 +6,7 @@ import com.bharatpe.lending.bureaurefactoring.enums.BureauLoanType;
 import com.bharatpe.lending.bureaurefactoring.enums.BureauTradeType;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauCallMaskedApiException;
 import com.bharatpe.lending.bureaurefactoring.nfi.ExperianNfiCalculator;
+import com.bharatpe.lending.bureaurefactoring.repository.MongoDataTemplate;
 import com.bharatpe.lending.bureaurefactoring.utils.BureauResponseUtil;
 import com.bharatpe.lending.bureaurefactoring.utils.CrifResponseUtil;
 import com.bharatpe.lending.bureaurefactoring.utils.ExperianResponseUtil;
@@ -29,8 +30,10 @@ public class BureauService {
     private static final double UNSECURED_LOAN_WEIGHT = 0.1;
     private static final double CREDIT_HISTORY_WEIGHT = 0.1;
     private static final double BBS_MULTIPLIER = 300;
+//    @Autowired
+//    MongetService mongetService;
     @Autowired
-    MongetService mongetService;
+    MongoDataTemplate mongoDataTemplate;
     @Autowired
     ExperianService experianService;
     @Autowired
@@ -275,7 +278,7 @@ public class BureauService {
             }
             //Boolean onePercentUser = (requestDto.getMobile() % 10 == 9) ? Boolean.TRUE : Boolean.FALSE;
             Boolean onePercentUser = Boolean.FALSE;
-            BureauDataDTO merchantConsent = mongetService.getConsentData(requestDto.getMobile().toString());
+            BureauDataDTO merchantConsent = mongoDataTemplate.getConsentData(requestDto.getMobile().toString());
             if (onePercentUser && Objects.nonNull(merchantConsent) && Objects.nonNull(merchantConsent.getSource()) &&
                     merchantConsent.getSource().equalsIgnoreCase("EASY_LOAN")
                     && Objects.isNull(merchantConsent.getConsentDetails())) {

@@ -11,6 +11,7 @@ import com.bharatpe.lending.bureaurefactoring.enums.BureauStatusEnum;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauCallMaskedApiException;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauClientException;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauParsingException;
+import com.bharatpe.lending.bureaurefactoring.repository.MongoDataTemplate;
 import com.bharatpe.lending.bureaurefactoring.utils.CommonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.lang.StringUtils;
@@ -39,8 +40,10 @@ public class ExperianService {
     @Autowired
     BureauResponseService bureauResponseService;
 
+//    @Autowired
+//    MongetService mongetService;
     @Autowired
-    MongetService mongetService;
+    MongoDataTemplate mongoDataTemplate;
 
     @Autowired
     BureauCommonService bureauCommonService;
@@ -64,7 +67,7 @@ public class ExperianService {
 
         try {
             logger.info("Fetching  Experian bureau data for mobile number: {}", mobile);
-            JsonNode responseData = mongetService.getDataV2(mobile);
+            JsonNode responseData = mongoDataTemplate.getDataV2(mobile);
             mobileBureau = mobile.toString() + "_" + bureauType;
             LocalDateTime currentDateTime = LocalDateTime.now();
             currentBureauDate = dateTimeFormatter.format(currentDateTime);
@@ -108,7 +111,7 @@ public class ExperianService {
                         .mobile_bureau(ObjectUtils.isEmpty(responseData.get("mobile_bureau")) ? null : responseData.get("mobile_bureau").asText())
                         .build();
             }
-            List<BureauRequestResponseDTO> responseDTOS = mongetService.getRequestResponse(mobile.toString(), Bureau.EXPERIAN, null,1);
+            List<BureauRequestResponseDTO> responseDTOS = mongoDataTemplate.getRequestResponse(mobile.toString(), Bureau.EXPERIAN, null,1);
             logger.info("request responses from mongo: {}", responseDTOS);
 
             // if earlier did not get bureau data from crif then pull its data after 7 days only
@@ -206,7 +209,7 @@ public class ExperianService {
 
         try {
             logger.info("Fetching Experian bureau details for mobile:{} and pan:{} using mapped mobile no:{}", requestDto.getMobile(), requestDto.getPanCard(), requestDto.getMappedMobile());
-            JsonNode responseData = mongetService.getDataV2(requestDto.getMobile());
+            JsonNode responseData = mongoDataTemplate.getDataV2(requestDto.getMobile());
             mobileBureau = requestDto.getMobile() + "_" + bureauType;
             LocalDateTime currentDateTime = LocalDateTime.now();
             currentBureauDate = dateTimeFormatter.format(currentDateTime);

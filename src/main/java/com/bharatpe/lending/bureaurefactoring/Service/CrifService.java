@@ -9,6 +9,7 @@ import com.bharatpe.lending.bureaurefactoring.enums.BureauStatusCode;
 import com.bharatpe.lending.bureaurefactoring.enums.BureauStatusEnum;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauClientException;
 import com.bharatpe.lending.bureaurefactoring.exception.BureauParsingException;
+import com.bharatpe.lending.bureaurefactoring.repository.MongoDataTemplate;
 import com.bharatpe.lending.bureaurefactoring.utils.CommonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
@@ -35,8 +36,10 @@ public class CrifService {
     @Autowired
     BureauResponseService bureauResponseService;
 
+//    @Autowired
+//    MongetService mongetService;
     @Autowired
-    MongetService mongetService;
+    MongoDataTemplate mongoDataTemplate;
 
     @Autowired
     BureauCommonService bureauCommonService;
@@ -61,7 +64,7 @@ public class CrifService {
 
         try {
             logger.info("Fetching crif bureau data for mobile number: {}", mobile);
-            JsonNode responseData = mongetService.getDataV2(mobile);
+            JsonNode responseData = mongoDataTemplate.getDataV2(mobile);
             mobileBureau = mobile.toString() + "_" + bureauType;
             LocalDateTime currentDateTime = LocalDateTime.now();
             currentBureauDate = dateTimeFormatter.format(currentDateTime);
@@ -98,7 +101,7 @@ public class CrifService {
                         .build();
             }
 
-            List<BureauRequestResponseDTO> responseDTOS = mongetService.getRequestResponse(mobile.toString(), Bureau.CRIF, CrifConstants.STAGE_2, 1);
+            List<BureauRequestResponseDTO> responseDTOS = mongoDataTemplate.getRequestResponse(mobile.toString(), Bureau.CRIF, CrifConstants.STAGE_2, 1);
             logger.info("request responses from mongo: {}", responseDTOS);
 
             // if earlier did not get bureau data from crif then pull its data after 7 days only
